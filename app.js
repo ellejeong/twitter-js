@@ -1,13 +1,10 @@
-//template engines
-//express side of programming
-//
-
-var express = require('express');
-// const twitterApp = express();
+const routes = require('./routes/');
+//var express = require('express');
 var app = express();
-// // instance of Router
-var appRouter = express.Router();
+//var routes = express.Router();
 
+//routes are usually are others files
+app.use('/', routes);
 
 
 var nunjucks = require('nunjucks');
@@ -29,7 +26,6 @@ nunjucks.configure('views', {noCache: true});
 
 // you don't need this because you're telling it to use nunjucks render;
 // if you use res render in actual file, it should work
-
 // nunjucks.render('index.html', locals, function (err, output) {
 //     console.log(output);
 // });
@@ -96,9 +92,11 @@ appRouter.get('/news', function(req, res) {
     res.send('News page!')
 });
 
-app.use('/', appRouter);
+//app.use('/', appRouter);
 
-//routes are usually are others files
+
+
+
 
 // makes the server run
 app.listen(3000, function() {

@@ -1,4 +1,4 @@
-const_ = require('lodash');
+const _ = require('lodash');
 
 var data = [];
 
@@ -43,4 +43,5 @@ for (let i = 0; i < 10; i++) {
   module.exports.add( getFakeName(), getFakeTweet() );
 }
 
-console.log(data);
+module.exports.add('Nimit Hashington', 'Hi');
+console.log(module.exports.find({ name: 'Nimit Hashington' }));
