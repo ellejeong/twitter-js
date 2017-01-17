@@ -1,11 +1,49 @@
+//template engines
+//express side of programming
+//
+
 var express = require('express');
 // const twitterApp = express();
 var app = express();
-
-
-
 // // instance of Router
 var appRouter = express.Router();
+
+
+
+var nunjucks = require('nunjucks');
+
+var locals = {
+    title: 'An Example',
+    people: [
+        { name: 'Gandalf'},
+        { name: 'Frodo' },
+        { name: 'Hermione'}
+    ]
+};
+
+
+
+
+
+nunjucks.configure('views', {noCache: true});
+
+// you don't need this because you're telling it to use nunjucks render;
+// if you use res render in actual file, it should work
+
+// nunjucks.render('index.html', locals, function (err, output) {
+//     console.log(output);
+// });
+
+//when encountering HTML files, use this to render it
+app.set('view engine', 'html'); // have res.render work with html files
+app.engine('html', nunjucks.render); // when giving html files to res.render, tell it to use nunjucks
+nunjucks.configure('views'); // point nunjucks to the proper directory for templates
+
+
+
+
+
+
 
 // use = whatever type of request (put, delete, etc)
 // use = is the one to use for middleware
@@ -46,10 +84,11 @@ appRouter.get('/special/', function (req, res, next) {
   res.send('You reached the special page!')
 })
 
+const people = [{name: 'Full'}, {name: 'Stacker'}, {name: 'Son'}];
 // home page route (localhost:3000)
 appRouter.get('/', function(req, res) {
     res.status(200);
-    res.send('Home page!')
+    res.render( 'index', {title: 'Hall of Fame', people: people} );
 });
 
 // news page (localhost:3000/news)
@@ -65,3 +104,8 @@ app.use('/', appRouter);
 app.listen(3000, function() {
     console.log('server listening')
 });
+
+
+
+
+
